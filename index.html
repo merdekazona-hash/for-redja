@@ -94,6 +94,12 @@ border-radius:40px;
 background:linear-gradient(45deg,#ff4b91,#ff8fab);
 color:white;
 cursor:pointer;
+transition:0.3s;
+}
+
+.card button:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px rgba(255,75,145,0.6);
 }
 
 /* STORY */
@@ -120,20 +126,29 @@ font-size:18px;
 min-height:120px;
 }
 
+/* Countdown */
 .countdown{
 margin-top:20px;
 font-size:18px;
 color:#ff8fab;
 }
 
+/* Continue Button */
 .story-container button{
-margin-top:40px;
-padding:15px 50px;
+margin-top:30px;
+padding:14px 45px;
 border:none;
-border-radius:50px;
+border-radius:40px;
 background:linear-gradient(45deg,#ff4b91,#ff8fab);
 color:white;
 cursor:pointer;
+font-size:18px;
+transition:0.3s, box-shadow 0.3s;
+}
+
+.story-container button:hover{
+transform:scale(1.1);
+box-shadow:0 0 25px rgba(255,75,145,0.7);
 }
 
 /* FOREVER */
@@ -150,23 +165,52 @@ color:#ffb6c1;
 margin-bottom:20px;
 }
 
+/* ====== POLAROID STYLE ====== */
+
 .gallery{
 display:flex;
 justify-content:center;
 flex-wrap:wrap;
-gap:20px;
+gap:50px;
+margin-top:40px;
 }
 
-.photo{
-width:300px;
-border-radius:25px;
-box-shadow:0 0 40px #ff2e93;
-transition:0.4s;
+.polaroid{
+background:white;
+padding:15px 15px 60px 15px;
+width:260px;
+box-shadow:0 15px 35px rgba(0,0,0,0.4);
+transform:rotate(-3deg);
+transition:0.4s ease;
+position:relative;
 }
 
-.photo:hover{
-transform:scale(1.08);
-box-shadow:0 0 60px #ff4b91;
+.polaroid:nth-child(2){
+transform:rotate(4deg);
+}
+
+.polaroid:nth-child(3){
+transform:rotate(-2deg);
+}
+
+.polaroid:hover{
+transform:rotate(0deg) scale(1.08);
+}
+
+.polaroid img{
+width:100%;
+display:block;
+}
+
+.caption{
+position:absolute;
+bottom:15px;
+left:0;
+right:0;
+text-align:center;
+font-family:'Playfair Display',serif;
+color:#333;
+font-size:14px;
 }
 
 /* QUESTION */
@@ -232,6 +276,11 @@ color:white;
 cursor:pointer;
 box-shadow:0 0 20px rgba(255,0,90,0.6);
 z-index:999;
+transition:0.3s;
+}
+
+.back-btn:hover{
+transform:scale(1.05);
 }
 </style>
 </head>
@@ -253,7 +302,7 @@ z-index:999;
 <h1>Redja ❤️</h1>
 <p id="text"></p>
 <div class="countdown" id="countdown"></div>
-<button id="next" onclick="showForever()" style="display:none;">Continue ✨</button>
+<button id="continueBtn" onclick="showForever()">Continue ✨</button>
 </div>
 <button class="back-btn" onclick="backToLogin()">Back</button>
 </div>
@@ -263,9 +312,22 @@ z-index:999;
 <p>Aku memilih kamu hari ini, besok, dan selamanya.</p>
 
 <div class="gallery">
-<img src="1.jpeg" class="photo">
-<img src="4.jpeg" class="photo">
-<img src="2.jpeg" class="photo">
+
+<div class="polaroid">
+<img src="1.jpeg">
+<div class="caption">our chaos 🤍</div>
+</div>
+
+<div class="polaroid">
+<img src="4.jpeg">
+<div class="caption">my favorite place</div>
+</div>
+
+<div class="polaroid">
+<img src="2.jpeg">
+<div class="caption">always you ❤️</div>
+</div>
+
 </div>
 
 <div class="question">
@@ -336,14 +398,11 @@ let i=0;
 function startTyping(){
 document.getElementById("text").innerHTML="";
 i=0;
-document.getElementById("next").style.display="none";
 function type(){
 if(i<msg.length){
 document.getElementById("text").innerHTML+=msg.charAt(i);
 i++;
 setTimeout(type,40);
-}else{
-document.getElementById("next").style.display="inline-block";
 }
 }
 type();
@@ -380,13 +439,16 @@ setTimeout(()=>conf.remove(),3000);
 }
 }
 
-/* NO BUTTON RUN */
+/* NO BUTTON BRUTAL */
 const noBtn=document.getElementById("noBtn");
-noBtn.addEventListener("mouseover",()=>{
+function moveNoBtn(){
 noBtn.style.position="absolute";
 noBtn.style.top=Math.random()*80+"%";
 noBtn.style.left=Math.random()*80+"%";
-});
+}
+noBtn.addEventListener("mouseover",moveNoBtn);
+noBtn.addEventListener("touchstart",moveNoBtn); // buat HP/tablet juga
+noBtn.addEventListener("click",moveNoBtn); // kalau nekat klik
 </script>
 
 </body>
